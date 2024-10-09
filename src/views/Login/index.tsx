@@ -2,12 +2,22 @@ import styles from "./index.module.less";
 import { Button, Form, Input } from "antd";
 import userApi from "@/api/userApi";
 import localstorage from "@/utils/localstorage";
+import { useState } from "react";
 export default function Login() {
+  const [isLoging, setIsLoging] = useState(false);
+
   const onFinish = (values: object) => {
-    userApi.login(values).then(res => {
-      console.log(res);
-      localstorage.set("token", res.data.token);
-    });
+    debugger;
+    setIsLoging(true);
+    try {
+      userApi.login(values).then(res => {
+        console.log(res);
+        localstorage.set("token", res.data.token);
+        setIsLoging(false);
+      });
+    } catch (error) {
+      setIsLoging(false);
+    }
   };
 
   return (
@@ -28,7 +38,7 @@ export default function Login() {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block>
+            <Button type="primary" htmlType="submit" block loading={isLoging}>
               登录
             </Button>
           </Form.Item>

@@ -1,7 +1,11 @@
-import request from "@/utils/request";
+import request from "@/utils/request/index";
 export default {
-  async login(params: object) {
-    const response: any = await request.post("/api/user/login", params);
+  async login(payload: object) {
+    const response: any = await request("/api/user/login", {
+      payload,
+      payloadIn: "body",
+      method: "POST",
+    });
     return response.data;
   },
 };

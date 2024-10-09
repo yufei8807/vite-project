@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { hideGlobalLoading, showGlobalLoading } from "@/components/GlobalLoading";
 import { message } from "@/utils/antdGlobal";
 
@@ -10,7 +10,10 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
-    showGlobalLoading();
+    console.log(config);
+    if (config.showLoading) {
+      showGlobalLoading();
+    }
     return config;
   },
   error => {
@@ -22,7 +25,6 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   res => {
-    message.success("请求成功");
     setTimeout(() => {
       hideGlobalLoading();
     }, 500);
@@ -39,7 +41,7 @@ export default {
   get<T>(url: string, params?: object): Promise<T> {
     return instance.get(url, { params });
   },
-  post<T>(url: string, params?: object): Promise<T> {
-    return instance.post(url, params);
+  post<T>(url: string, params: object, config: AxiosRequestConfig): Promise<T> {
+    return instance.post(url, params, config);
   },
 };
