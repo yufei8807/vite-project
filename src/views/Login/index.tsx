@@ -3,19 +3,22 @@ import { Button, Form, Input } from "antd";
 import userApi from "@/api/userApi";
 import localstorage from "@/utils/localstorage";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 export default function Login() {
   const [isLoging, setIsLoging] = useState(false);
+  const navigate = useNavigate();
 
   const onFinish = (values: object) => {
-    debugger;
     setIsLoging(true);
     try {
       userApi.login(values).then(res => {
         console.log(res);
-        localstorage.set("token", res.data.token);
+        localstorage.set("token", res.token);
         setIsLoging(false);
+        navigate("/welcome");
       });
     } catch (error) {
+      console.log(error);
       setIsLoging(false);
     }
   };

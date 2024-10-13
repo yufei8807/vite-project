@@ -4,8 +4,17 @@ import styles from "./index.module.less";
 import siderLog from "@/assets/images/logo.png";
 import { UserOutlined, VideoCameraOutlined, UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 const NavSider = () => {
   const navigate = useNavigate();
+  const [selectedKeys, setSelectedKeys] = useState();
+
+  const handleClick = e => {
+    console.log("e", e);
+    setSelectedKeys(e.key);
+    navigate(e.key);
+  };
+
   return (
     <Sider className={styles.sider}>
       <div className={styles.siderLogo} onClick={() => navigate("/")}>
@@ -15,11 +24,13 @@ const NavSider = () => {
       <Menu
         theme="dark"
         mode="inline"
+        onClick={handleClick}
+        selectedKeys={selectedKeys}
         items={[
           {
-            key: "1",
+            key: "dashboard",
             icon: <UserOutlined />,
-            label: "nav 1",
+            label: "Dashboard",
           },
           {
             key: "2",

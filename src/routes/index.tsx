@@ -4,6 +4,7 @@ import Error403 from "@/views/403";
 import Login from "@/views/Login";
 import Layout from "@/layout";
 import Welcome from "@/views/Welcome";
+import Dashboard from "@/views/Dashboard";
 
 const routes = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const routes = createBrowserRouter([
       {
         path: "/welcome",
         element: <Welcome />,
+      },
+      {
+        path: "/dashboard",
+        element: <Dashboard />,
       },
     ],
   },
